@@ -5,7 +5,6 @@ export interface ICompany {
   company: string;
   city: string;
   timezone: string;
-
   getPlaceholders(): Templates;
 }
 
@@ -20,6 +19,11 @@ export class Company
               company: string,
               city: string,
               timezone: string) {
+    console.assert(id != null, 'Assertion Fail @ Company#constructor: No id');
+    console.assert(company != null, 'Assertion Fail @ Company#constructor: No company');
+    console.assert(city != null, 'Assertion Fail @ Company#constructor: No city');
+    console.assert(timezone != null, 'Assertion Fail @ Company#constructor: No timezone');
+
     this.id = id;
     this.company = company;
     this.city = city;

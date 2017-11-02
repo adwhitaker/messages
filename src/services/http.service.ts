@@ -12,6 +12,8 @@ export class HttpService
   constructor(private _http: HttpClient) {}
 
   public get(url: string) {
+    console.assert(url != null, 'Assertion Fail @ HttpService#get: No url');
+
     return this._http.get(url);
   }
 }

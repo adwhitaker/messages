@@ -45,8 +45,12 @@ export class GuestsService
   }
 
   private _handleLoadGuestsResponse(guests: guestResponse[]): void {
+    console.assert(guests != null, 'Assertion Fail @ GuestsService#_handleLoadGuestsResponse: No guests');
+
     let formattedGuests: IGuest[] = [];
     guests.forEach((guest: guestResponse) => {
+      console.assert(guests != null, 'Assertion Fail @ GuestsService#_handleLoadGuestsResponse: No guest');
+
       const newGuest: IGuest = new Guest(
         guest.id,
         guest.firstName,

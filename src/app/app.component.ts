@@ -14,7 +14,9 @@ type TemplateInput = { name: string, value: string };
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent
+  implements OnInit {
+
   public items: TemplateInput[];
   public message: string;
   public errors: string[];
@@ -32,6 +34,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.assert(constants != null, 'Assertion Fail @ AppComponent#ngOnInit: No constants');
+    console.assert(this._guestService != null, 'Assertion Fail @ AppComponent#ngOnInit: No _guestService');
+    console.assert(this._companiesService != null, 'Assertion Fail @ AppComponent#ngOnInit: No _companiesService');
+
     this.message = constants.initialMessage;
     this.addPlaceholder();
 
@@ -43,6 +49,7 @@ export class AppComponent implements OnInit {
   }
 
   public addPlaceholder(): void {
+    console.assert(this.items != null, 'Assertion Fail @ AppComponent#addPlaceholder: No items');
     this.items.push({ name: '', value: '' });
   }
 
@@ -56,9 +63,14 @@ export class AppComponent implements OnInit {
       return;
     }
 
+    console.assert(this.items != null, 'Assertion Fail @ AppComponent#onSubmit: No items');
+    console.assert(this.message != null, 'Assertion Fail @ AppComponent#onSubmit: No message');
+
     const templates: Templates = this._removeNullTemplates(this.items);
     let placeholders: Templates = Object.assign({}, this.company.getPlaceholders(), this.guest.getPlaceholders(), templates);
     placeholders = this._checkForGreeting(placeholders);
+
+    console.assert(Message != null, 'Assertion Fail @ AppComponent#onSubmit: No Message');
 
     const invalidPlaceholders: string[] = Message.checkForInvalidPlaceholders(this.message, placeholders);
 
@@ -71,6 +83,8 @@ export class AppComponent implements OnInit {
   }
 
   private _validateSelects(): string[] {
+    console.assert(formErrors != null, 'Assertion Fail @ AppComponent#_validateSelects: No formErrors');
+
     let errors: string[] = [];
     if (!this.guest) {
       errors.push(formErrors.selectGuest);
@@ -82,6 +96,8 @@ export class AppComponent implements OnInit {
   }
 
   private _removeNullTemplates(items: TemplateInput[]): Templates {
+    console.assert(items != null, 'Assertion Fail @ AppComponent#_removeNullTemplates: No items');
+
     return items.reduce((reduced, item) => {
       if (item.name) {
         return { ... reduced, ... { [item.name]: item.value } };
@@ -91,6 +107,10 @@ export class AppComponent implements OnInit {
   }
 
   private _checkForGreeting(currentPlaceholders: Templates): Templates {
+    console.assert(currentPlaceholders != null, 'Assertion Fail @ AppComponent#_checkForGreeting: No currentPlaceholders');
+    console.assert(Message != null, 'Assertion Fail @ AppComponent#_checkForGreeting: No Message');
+    console.assert(dateMethods != null, 'Assertion Fail @ AppComponent#_checkForGreeting: No dateMethods');
+
     const messagePlaceholders = Message.getMessagePlaceholders(this.message);
     if (messagePlaceholders.includes(defaultPlaceholders.greeting)) {
       const greeting: string = dateMethods.generateGreetingFromTimezone(this.company.timezone);

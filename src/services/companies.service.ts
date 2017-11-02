@@ -42,8 +42,11 @@ export class CompaniesService
   }
 
   private _handleLoadCompaniesResponse(companies: companyResponse[]): void {
+    console.assert(companies != null, 'Assertion Fail @ CompaniesService#_handleLoadCompaniesResponse: No companies');
+
     let formattedCompanies: ICompany[] = [];
     companies.forEach((company: companyResponse) => {
+      console.assert(company != null, 'Assertion Fail @ CompaniesService#_handleLoadCompaniesResponse: No company');
       const newCompany: ICompany = new Company(company.id, company.company, company.city, company.timezone);
       formattedCompanies.push(newCompany);
     });

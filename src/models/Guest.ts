@@ -25,6 +25,13 @@ export class Guest
               roomNumber: number,
               startTimestamp: number,
               endTimestamp: number) {
+    console.assert(id != null, 'Assertion Fail @ Guest#constructor: No id');
+    console.assert(firstName != null, 'Assertion Fail @ Guest#constructor: No firstName');
+    console.assert(lastName != null, 'Assertion Fail @ Guest#constructor: No lastName');
+    console.assert(roomNumber != null, 'Assertion Fail @ Guest#constructor: No roomNumber');
+    console.assert(startTimestamp != null, 'Assertion Fail @ Guest#constructor: No startTimestamp');
+    console.assert(endTimestamp != null, 'Assertion Fail @ Guest#constructor: No endTimestamp');
+
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

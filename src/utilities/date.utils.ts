@@ -17,6 +17,7 @@ export const methods = {
 };
 
 function generateGreetingFromTimezone(timezone: string): string {
+  console.assert(timezone != null, 'Assertion Fail @ dateUtils#generateGreetingFromTimezone: No Timezone');
   const currentTimezoneTime = moment().tz(timezone);
   const currentHour = Number(currentTimezoneTime.format(constants.formatHour));
   let greeting: string;
