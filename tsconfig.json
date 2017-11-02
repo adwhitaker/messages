@@ -11,6 +11,9 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "files": [
+      "node_modules/moment/moment.d.ts"
+    ],
     "lib": [
       "es2017",
       "dom"
