@@ -36,21 +36,30 @@
         [ngModelOptions]="{ standalone: true }"
       >
     </div>
+
+    <button type="button" (click)="addTemplate()">Add Another Placeholder</button>
+
   </div>
 
-  <button type="button" (click)="addTemplate()">Add</button>
-  <button type="submit">Save</button>
+  <button type="submit">Send Message</button>
 </form>
 
-<div>
-  {{ text }}
+<div class="sent-message" *ngIf="text.length">
+  <p>message:</p>
+  <div class="message-text">
+    {{ text }}
+  </div>
 </div>
 
-<div *ngIf="errors.length">
-  <div>Invalid placeholders:</div>
-  <div
-    *ngFor="let error of errors"
-  >
-    <div>{{ error }}</div>
+
+<div class="sent-message" *ngIf="errors.length">
+  <p>Invalid placeholders:</p>
+  <div class="error-text">
+    <div
+      *ngFor="let error of errors"
+    >
+      <div>{{ error }}</div>
+    </div>
   </div>
+
 </div>

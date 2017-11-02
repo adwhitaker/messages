@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Message, Templates } from '../../../../models/Message';
-import { CompaniesService } from '../../../../services/companies.service';
-import { ICompany } from '../../../../models/Company';
-import { IGuest } from '../../../../models/Guest';
-import { GuestsService } from '../../../../services/guests.service';
+import { Message, Templates } from '../../../models/Message';
+import { CompaniesService } from '../../../services/companies.service';
+import { ICompany } from '../../../models/Company';
+import { IGuest } from '../../../models/Guest';
+import { GuestsService } from '../../../services/guests.service';
 
 type TemplateInput = { name: string, value: string };
 type ValidateType = { [id: string]: string };
@@ -33,6 +33,7 @@ export class UserComponent implements OnInit {
     this.message = '{greeting} {firstName}, and welcome to {company}! Room {roomNumber} is now ready you. ' +
       'Enjoy your stay, and let us know if you need anything.';
 
+    this.addTemplate();
     this._guestService.getGuests().subscribe((guests: IGuest[]) => this.guests = guests);
     this._companiesService.getCompanies().subscribe((companies: ICompany[]) => this.companies = companies);
   }
