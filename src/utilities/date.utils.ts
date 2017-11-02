@@ -3,7 +3,8 @@ import * as moment from 'moment-timezone';
 export const constants = {
   afternoonStartTime: 12,
   eveningStartTime: 17,
-  formatHour: 'HH'
+  formatHour: 'HH',
+  formatLongWithTime: 'LLL'
 };
 
 const greetings = {
@@ -13,7 +14,8 @@ const greetings = {
 }
 
 export const methods = {
-  generateGreetingFromTimezone
+  generateGreetingFromTimezone,
+  formatLong
 };
 
 function generateGreetingFromTimezone(timezone: string): string {
@@ -32,4 +34,11 @@ function generateGreetingFromTimezone(timezone: string): string {
   }
 
   return greeting;
+}
+
+function formatLong(date): string {
+  console.assert(date != null, 'Assertion Fail @ dateUtils#generateGreetingFromTimezone: No date');
+  console.assert(constants != null, 'Assertion Fail @ dateUtils#generateGreetingFromTimezone: No constants');
+
+  return moment().format(constants.formatLongWithTime);
 }

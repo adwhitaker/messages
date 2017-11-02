@@ -1,4 +1,5 @@
 import { Templates } from './Message';
+import { methods as dateMethods } from '../utilities/date.utils';
 
 export interface IGuest {
   id: number;
@@ -45,8 +46,8 @@ export class Guest
       firstName: this.firstName,
       lastName: this.lastName,
       roomNumber: this.roomNumber,
-      startTimestamp: this.startTimestamp,
-      endTimestamp: this.endTimestamp
+      startTimestamp: dateMethods.formatLong(this.startTimestamp),
+      endTimestamp: dateMethods.formatLong(this.endTimestamp)
     };
   }
 }
