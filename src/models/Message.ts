@@ -1,6 +1,6 @@
-import * as moment from 'moment';
+import { methods as regexMethods } from '../utilities/regex.utils';
 
-export type Templates = { [templateName: string]: string | number };
+export type Templates = { [templateName: string]: string };
 
 export interface IMessage {
   toString(): string;
@@ -27,7 +27,7 @@ export class Message
   }
 
   static getMessagePlaceholders(message: string): string[] {
-    const placeholders: string[] = message.match(/{([^{}]*)}/g);
+    const placeholders: string[] = regexMethods.getPlaceholdersFromString(message);
     if (placeholders) {
       return Message.removeTemplateWrapper(placeholders);
     } else {
@@ -37,13 +37,9 @@ export class Message
 
   static removeTemplateWrapper(placeholders: string[]): string[] {
     return placeholders.reduce((reduced: string[], word: string) => {
-      const removedWrapper: string = word.slice(1, -1).trim();
+      const removedWrapper: string = regexMethods.removeTemplateFromWord(word);
       return [... reduced, removedWrapper];
     }, []);
-  }
-
-  private _removeTemplate(word: string): string {
-   return  word.slice(1, -1).trim();
   }
 
   constructor(message: string, templates: Templates) {
@@ -52,28 +48,16 @@ export class Message
   }
 
   public toString(): string {
-    return this._replaceTemplates();
-  }
-
-  private _getGreeting(): string {
-    const x = moment();
-    return '';
-  }
-
-  private _getPlaceholders(message: string): string[] {
-    return message.match(/{([^{}]*)}/g);
-  }
-
-  private _replaceTemplates(): string {
     let message = this._message;
-    const placeholders: string[] = this._getPlaceholders(message);
+    const placeholders: string[] = regexMethods.getPlaceholdersFromString(message);
     placeholders.forEach(placeholder => {
       const regex: RegExp = new RegExp(placeholder, REGEX_GLOBAL);
-      const templateKey: string = this._removeTemplate(placeholder);
-      const value: string = this._templates[templateKey] as string || '';
+      const templateKey: string = regexMethods.removeTemplateFromWord(placeholder);
+      const value: string = this._templates[templateKey] || '';
       message = message.replace(regex, value);
     });
     return message;
   }
+
 
 }

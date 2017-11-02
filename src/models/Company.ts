@@ -5,6 +5,7 @@ export interface ICompany {
   company: string;
   city: string;
   timezone: string;
+
   getPlaceholders(): Templates;
 }
 
@@ -15,7 +16,10 @@ export class Company
   readonly city;
   readonly timezone;
 
-  constructor(id: number, company: string, city: string, timezone: string) {
+  constructor(id: number,
+              company: string,
+              city: string,
+              timezone: string) {
     this.id = id;
     this.company = company;
     this.city = city;

@@ -4,11 +4,9 @@ export interface IGuest {
   id: number;
   firstName: string;
   lastName: string;
-  // reservation: {
   roomNumber: number;
   startTimestamp: number;
   endTimestamp: number;
-  // }
   getPlaceholders(): Templates;
 }
 
