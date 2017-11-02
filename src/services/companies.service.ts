@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 const JSON_COMPANIES: string = '../assets/Companies.json';
 
-type companyResponse = {
+type CompaniesResponse = {
   id: number,
   company: string,
   city: string,
@@ -36,20 +36,22 @@ export class CompaniesService
     this._httpService
       .get(JSON_COMPANIES)
       .subscribe(
-      (response: companyResponse[]) => this._handleLoadCompaniesResponse(response),
+      (response: CompaniesResponse[]) => this._handleLoadCompaniesResponse(response),
       error => console.error('Error @ CompaniesService#_loadCompanies', error)
     );
   }
 
-  private _handleLoadCompaniesResponse(companies: companyResponse[]): void {
+  private _handleLoadCompaniesResponse(companies: CompaniesResponse[]): void {
     console.assert(companies != null, 'Assertion Fail @ CompaniesService#_handleLoadCompaniesResponse: No companies');
 
     let formattedCompanies: ICompany[] = [];
-    companies.forEach((company: companyResponse) => {
+
+    companies.forEach((company: CompaniesResponse) => {
       console.assert(company != null, 'Assertion Fail @ CompaniesService#_handleLoadCompaniesResponse: No company');
       const newCompany: ICompany = new Company(company.id, company.company, company.city, company.timezone);
       formattedCompanies.push(newCompany);
     });
+
     this._companies.next(formattedCompanies);
   }
 }

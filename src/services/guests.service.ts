@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 const JSON_Guests: string = '../assets/Guests.json';
 
-type guestResponse = {
+type GuestsResponse = {
   id: number;
   firstName: string;
   lastName: string;
@@ -39,16 +39,17 @@ export class GuestsService
     this._httpService
       .get(JSON_Guests)
       .subscribe(
-        (response: guestResponse[]) => this._handleLoadGuestsResponse(response),
+        (response: GuestsResponse[]) => this._handleLoadGuestsResponse(response),
         error => console.error('Error @ GuestsService#_loadGuests', error)
       );
   }
 
-  private _handleLoadGuestsResponse(guests: guestResponse[]): void {
+  private _handleLoadGuestsResponse(guests: GuestsResponse[]): void {
     console.assert(guests != null, 'Assertion Fail @ GuestsService#_handleLoadGuestsResponse: No guests');
 
     let formattedGuests: IGuest[] = [];
-    guests.forEach((guest: guestResponse) => {
+
+    guests.forEach((guest: GuestsResponse) => {
       console.assert(guests != null, 'Assertion Fail @ GuestsService#_handleLoadGuestsResponse: No guest');
 
       const newGuest: IGuest = new Guest(
@@ -61,6 +62,7 @@ export class GuestsService
       );
       formattedGuests.push(newGuest);
     });
+
     this._guests.next(formattedGuests);
   }
 

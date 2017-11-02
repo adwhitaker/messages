@@ -1,3 +1,5 @@
+$error_background: #ff8080;
+
 textarea {
   width: 50%;
   height: 150px;
@@ -34,7 +36,7 @@ button {
   .error-text {
     padding: 10px;
     border-radius: 5px;
-    background: #ff8080;
+    background: $error_background;
   }
   .text {
     padding: 2px;

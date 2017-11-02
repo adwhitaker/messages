@@ -27,11 +27,13 @@
     <input
       [(ngModel)]="item.name"
       [ngModelOptions]="{ standalone: true }"
+      placeholder="placeholder name"
     >
 
     <input
       [(ngModel)]="item.value"
       [ngModelOptions]="{ standalone: true }"
+      placeholder="placeholder value"
     >
   </div>
 
@@ -47,7 +49,7 @@
 </div>
 
 <div class="sent-message" *ngIf="errors.length">
-  <p>Invalid placeholders:</p>
+  <p>Invalid placeholders or Issues:</p>
   <div class="error-text">
     <p *ngFor="let error of errors">
       {{ error }}

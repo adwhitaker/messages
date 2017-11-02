@@ -14,18 +14,20 @@ export class Message
   private _message: string;
   private _templates: Templates;
 
-  static checkForInvalidPlaceholders(message: string, templates: Templates): string[] {
-    console.assert(message != null, 'Assertion Fail @ Message#checkForInvalidPlaceholders: No message');
-    console.assert(Message != null, 'Assertion Fail @ Message#checkForInvalidPlaceholders: No Message');
+  static findInvalidPlaceholders(message: string, templates: Templates): string[] {
+    console.assert(message != null, 'Assertion Fail @ Message#findInvalidPlaceholders: No message');
+    console.assert(Message != null, 'Assertion Fail @ Message#findInvalidPlaceholders: No Message');
 
     const placeholders: string[] = Object.keys(templates);
     const messagePlaceholders: string[] = Message.getMessagePlaceholders(message);
     const errors: string[] = [];
+
     messagePlaceholders.forEach((placeholder: string) => {
       if (!placeholders.includes(placeholder)) {
         errors.push(placeholder);
       }
     });
+
     return errors;
   }
 
@@ -35,16 +37,16 @@ export class Message
     console.assert(regexMethods != null, 'Assertion Fail @ Message#getMessagePlaceholders: No regexMethods');
 
     const placeholders: string[] = regexMethods.getPlaceholdersFromString(message);
+
     if (placeholders) {
-      return Message.removeTemplateWrapper(placeholders);
-    } else {
-      return [];
+      return Message.removeTemplateFromPlaceholders(placeholders);
     }
+    return [];
   }
 
-  static removeTemplateWrapper(placeholders: string[]): string[] {
-    console.assert(placeholders != null, 'Assertion Fail @ Message#removeTemplateWrapper: No placeholders');
-    console.assert(regexMethods != null, 'Assertion Fail @ Message#removeTemplateWrapper: No regexMethods');
+  static removeTemplateFromPlaceholders(placeholders: string[]): string[] {
+    console.assert(placeholders != null, 'Assertion Fail @ Message#removeTemplateFromPlaceholders: No placeholders');
+    console.assert(regexMethods != null, 'Assertion Fail @ Message#removeTemplateFromPlaceholders: No regexMethods');
 
     return placeholders.reduce((reduced: string[], word: string) => {
       const removedWrapper: string = regexMethods.removeTemplateFromWord(word);
@@ -65,13 +67,15 @@ export class Message
     console.assert(regexMethods != null, 'Assertion Fail @ Message#toString: No regexMethods');
 
     let message = this._message;
-    const placeholders: string[] = regexMethods.getPlaceholdersFromString(message);
-    placeholders.forEach(placeholder => {
+    const placeholdersWithTemplate: string[] = regexMethods.getPlaceholdersFromString(message);
+
+    placeholdersWithTemplate.forEach(placeholder => {
       const regex: RegExp = new RegExp(placeholder, REGEX_GLOBAL);
       const templateKey: string = regexMethods.removeTemplateFromWord(placeholder);
       const value: string = this._templates[templateKey] || '';
       message = message.replace(regex, value);
     });
+
     return message;
   }
 

@@ -72,7 +72,7 @@ export class AppComponent
 
     console.assert(Message != null, 'Assertion Fail @ AppComponent#onSubmit: No Message');
 
-    const invalidPlaceholders: string[] = Message.checkForInvalidPlaceholders(this.message, placeholders);
+    const invalidPlaceholders: string[] = Message.findInvalidPlaceholders(this.message, placeholders);
 
     if (invalidPlaceholders.length > 0) {
       this.errors = invalidPlaceholders;
@@ -86,12 +86,14 @@ export class AppComponent
     console.assert(formErrors != null, 'Assertion Fail @ AppComponent#_validateSelects: No formErrors');
 
     let errors: string[] = [];
+
     if (!this.guest) {
       errors.push(formErrors.selectGuest);
     }
     if (!this.company) {
       errors.push(formErrors.selectCompany);
     }
+
     return errors;
   }
 
@@ -112,6 +114,7 @@ export class AppComponent
     console.assert(dateMethods != null, 'Assertion Fail @ AppComponent#_checkForGreeting: No dateMethods');
 
     const messagePlaceholders = Message.getMessagePlaceholders(this.message);
+    
     if (messagePlaceholders.includes(defaultPlaceholders.greeting)) {
       const greeting: string = dateMethods.generateGreetingFromTimezone(this.company.timezone);
       return Object.assign({}, currentPlaceholders, { greeting });
