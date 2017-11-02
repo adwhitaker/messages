@@ -20,15 +20,15 @@ export class Message
 
     const placeholders: string[] = Object.keys(templates);
     const messagePlaceholders: string[] = Message.getMessagePlaceholders(message);
-    const errors: string[] = [];
+    const invalidPlaceholders: string[] = [];
 
     messagePlaceholders.forEach((placeholder: string) => {
       if (!placeholders.includes(placeholder)) {
-        errors.push(placeholder);
+        invalidPlaceholders.push(placeholder);
       }
     });
 
-    return errors;
+    return invalidPlaceholders;
   }
 
   static getMessagePlaceholders(message: string): string[] {
