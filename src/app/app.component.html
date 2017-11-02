@@ -1,6 +1,18 @@
+<div class="spacer"></div>
+
 <form (ngSubmit)="onSubmit()">
-  <div>
-    <div>Company</div>
+
+  <div class="form-row">
+    <div>Message Template:</div>
+    <select
+      [(ngModel)]="messageTemplate"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="changeMessageTemplate(messageTemplate)"
+    >
+      <option *ngFor="let messageTemplate of messages" [ngValue]="messageTemplate">{{messageTemplate.name}}</option>
+    </select>
+
+    <div>Company:</div>
     <select
       [(ngModel)]="company"
       [ngModelOptions]="{ standalone: true }"
@@ -8,7 +20,7 @@
       <option *ngFor="let company of companies" [ngValue]="company">{{company.company}}</option>
     </select>
 
-    <div>Guest</div>
+    <div>Guest:</div>
     <select
       [(ngModel)]="guest"
       [ngModelOptions]="{ standalone: true }"
@@ -17,38 +29,57 @@
     </select>
   </div>
 
-  <textarea
-    class="message"
-    [(ngModel)]="message"
-    name="message"
-  ></textarea>
+  <div class="spacer"></div>
 
-  <div *ngFor="let item of items">
-    <input
-      [(ngModel)]="item.name"
-      [ngModelOptions]="{ standalone: true }"
-      placeholder="placeholder name"
-    >
+  <div class="form-row">
+          <textarea
+            class="message"
+            [(ngModel)]="message"
+            name="message"
+          ></textarea>
 
-    <input
-      [(ngModel)]="item.value"
-      [ngModelOptions]="{ standalone: true }"
-      placeholder="placeholder value"
-    >
+    <div>
+      <app-add-template-form
+        (addMessageTemplate)="addTemplate($event)"
+      ></app-add-template-form>
+      <button class="button-green" type="submit">Send Message</button>
+    </div>
   </div>
 
-  <button class="button-blue" type="button" (click)="addPlaceholder()">Add Another Placeholder</button>
-  <button class="button-green" type="submit">Send Message</button>
+  <div class="spacer"></div>
+
+  <div class="form-row row-start">
+    <div>
+      <div *ngFor="let item of items">
+        <input
+          [(ngModel)]="item.name"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="placeholder name"
+        >
+
+        <input
+          [(ngModel)]="item.value"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="placeholder value"
+        >
+      </div>
+    </div>
+
+    <button class="button-blue" type="button" (click)="addPlaceholder()">Add Another Placeholder</button>
+  </div>
+
 </form>
 
-<div class="sent-message" *ngIf="text.length">
+<div class="spacer"></div>
+
+<div class="user-message" *ngIf="text.length">
   <p>message:</p>
   <p class="message-text">
     {{ text }}
   </p>
 </div>
 
-<div class="sent-message" *ngIf="errors.length">
+<div class="user-message" *ngIf="errors.length">
   <p>Invalid placeholders or Issues:</p>
   <div class="error-text">
     <p *ngFor="let error of errors">
@@ -56,3 +87,4 @@
     </p>
   </div>
 </div>
+

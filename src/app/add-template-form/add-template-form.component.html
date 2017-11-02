@@ -1,0 +1,19 @@
+<div class="add-template-form">
+  <form (ngSubmit)="addTemplate($event)">
+    <div>Add Template</div>
+    <div>
+      <div class="form-group">
+        <input
+          type="text"
+          [(ngModel)]="name"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Template Name"
+          required
+        >
+      </div>
+
+      <button class="button-blue" type="submit">Add Template</button>
+    </div>
+  </form>
+
+</div>

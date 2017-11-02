@@ -4,8 +4,9 @@ import { CompaniesService } from '../services/companies.service';
 import { ICompany } from '..//models/Company';
 import { IGuest } from '../models/Guest';
 import { GuestsService } from '../services/guests.service';
-import { constants, formErrors, defaultPlaceholders } from '../config/constants';
+import { formErrors, defaultPlaceholders } from '../config/constants';
 import { methods as dateMethods } from '../utilities/date.utils';
+import { MessagesService, IMessageTemplate } from '../services/messages.service';
 
 type TemplateInput = { name: string, value: string };
 
@@ -23,33 +24,65 @@ export class AppComponent
   public text: string;
   public companies: ICompany[];
   public guests: IGuest[];
+  public messages: IMessageTemplate[];
+  public messageTemplate: IMessageTemplate;
   public company: ICompany;
   public guest: IGuest;
 
   constructor(private _companiesService: CompaniesService,
-              private _guestService: GuestsService) {
+              private _guestService: GuestsService,
+              private _messagesService: MessagesService) {
     this.message = '';
     this.items = [];
     this._resetDisplay();
   }
 
-  ngOnInit(): void {
-    console.assert(constants != null, 'Assertion Fail @ AppComponent#ngOnInit: No constants');
-    console.assert(this._guestService != null, 'Assertion Fail @ AppComponent#ngOnInit: No _guestService');
-    console.assert(this._companiesService != null, 'Assertion Fail @ AppComponent#ngOnInit: No _companiesService');
-
-    this.message = constants.initialMessage;
+  public ngOnInit(): void {
     this.addPlaceholder();
+    this._initSelects();
+  }
+
+  private _initSelects(): void {
+    console.assert(this._guestService != null, 'Assertion Fail @ AppComponent#_initSelects: No _guestService');
+    console.assert(this._companiesService != null, 'Assertion Fail @ AppComponent#_initSelects: No _companiesService');
+    console.assert(this._messagesService != null, 'Assertion Fail @ AppComponent#_initSelects: No _messagesService');
 
     this._guestService.getGuests()
       .subscribe((guests: IGuest[]) => this.guests = guests);
 
     this._companiesService.getCompanies()
       .subscribe((companies: ICompany[]) => this.companies = companies);
+
+    this._messagesService.getTemplateMessages()
+      .subscribe((messages: IMessageTemplate[]) => {
+        if (messages.length) {
+          this.messages = messages;
+        }
+
+        if (messages.length && !this.messageTemplate) {
+          this.messageTemplate = messages[0];
+          this.message = messages[0].value;
+        }
+      });
+  }
+
+  public changeMessageTemplate(newTemplate: IMessageTemplate): void {
+    console.assert(newTemplate != null, 'Assertion Fail @ AppComponent#changeTemplate: No newTemplate');
+
+    this.message = newTemplate.value;
+  }
+
+  public addTemplate(x): void {
+    console.assert(this._messagesService != null, 'Assertion Fail @ AppComponent#addPlaceholder: No _messagesService');
+
+    const newTemplate: IMessageTemplate = { name: x, value: this.message };
+    this._messagesService.addMessageTemplate(newTemplate);
+    this.messageTemplate = newTemplate;
   }
 
   public addPlaceholder(): void {
     console.assert(this.items != null, 'Assertion Fail @ AppComponent#addPlaceholder: No items');
+
     this.items.push({ name: '', value: '' });
   }
 
@@ -114,7 +147,7 @@ export class AppComponent
     console.assert(dateMethods != null, 'Assertion Fail @ AppComponent#_checkForGreeting: No dateMethods');
 
     const messagePlaceholders = Message.getMessagePlaceholders(this.message);
-    
+
     if (messagePlaceholders.includes(defaultPlaceholders.greeting)) {
       const greeting: string = dateMethods.generateGreetingFromTimezone(this.company.timezone);
       return Object.assign({}, currentPlaceholders, { greeting });

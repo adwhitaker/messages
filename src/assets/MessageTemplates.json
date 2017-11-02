@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Room Is Ready",
+    "value": "{greeting} {firstName}, and welcome to {company}! Room {roomNumber} is now ready you. Enjoy your stay, and let us know if you need anything."
+  },
+  {
+    "name": "Laundry Locations",
+    "value": "The laundry room is located on the {floorNumber} floor."
+  },
+  {
+    "name": "Thanks For Staying",
+    "value": "{firstName}, it looks like your time with us has come to an end. Thanks for staying with us and visit us again soon."
+  },
+  {
+    "name": "Sending Assistance",
+    "value": "Thanks for contacting us about {item}, someone will be at your room to assist your shortly."
+  },
+  {
+    "name": "Animal in Room",
+    "value": "{firstName}, we are sorry to hear that a {animal} was found in your room, we will be sending someone to room {roomNumber} shortly."
+  }
+]
