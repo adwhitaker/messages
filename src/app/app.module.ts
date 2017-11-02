@@ -4,20 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { MainComponent } from '../pages/main/main.component';
-import { NoPageFoundComponent } from '../pages/no-page-found/no-page-found.component';
-import { UserComponent } from '../pages/main/user/user.component';
-import { AppRoutingModule } from './app-routing.module';
 import { CompaniesService } from '../services/companies.service';
 import { HttpService } from '../services/http.service';
 import { GuestsService } from '../services/guests.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MainComponent,
-    NoPageFoundComponent,
-    UserComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +18,6 @@ import { GuestsService } from '../services/guests.service';
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    AppRoutingModule
   ],
   providers: [
     HttpService,
