@@ -1,0 +1,56 @@
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <div>Company</div>
+    <select
+      [(ngModel)]="company"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <option *ngFor="let company of companies" [ngValue]="company">{{company.company}}</option>
+    </select>
+
+    <div>Guest</div>
+    <select
+      [(ngModel)]="guest"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <option *ngFor="let guest of guests" [ngValue]="guest">{{ guest.firstName + ' ' + guest.lastName }}</option>
+    </select>
+  </div>
+
+
+  <input
+    class="message"
+    [(ngModel)]="message"
+    name="message"
+  >
+
+  <div>
+    <div *ngFor="let item of items">
+      <input
+        [(ngModel)]="item.name"
+        [ngModelOptions]="{ standalone: true }"
+      >
+
+      <input
+        [(ngModel)]="item.value"
+        [ngModelOptions]="{ standalone: true }"
+      >
+    </div>
+  </div>
+
+  <button type="button" (click)="addTemplate()">Add</button>
+  <button type="submit">Save</button>
+</form>
+
+<div>
+  {{ text }}
+</div>
+
+<div *ngIf="errors.length">
+  <div>Invalid placeholders:</div>
+  <div
+    *ngFor="let error of errors"
+  >
+    <div>{{ error }}</div>
+  </div>
+</div>
