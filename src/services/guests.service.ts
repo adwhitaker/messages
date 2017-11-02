@@ -4,7 +4,7 @@ import { Guest, IGuest } from '../models/Guest';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-const JSON_Guests: string = '../assets/Guests.json';
+const JSON_GUESTS: string = '../assets/Guests.json';
 
 type GuestsResponse = {
   id: number;
@@ -37,7 +37,7 @@ export class GuestsService
 
   private _loadGuests(): void {
     this._httpService
-      .get(JSON_Guests)
+      .get(JSON_GUESTS)
       .subscribe(
         (response: GuestsResponse[]) => this._handleLoadGuestsResponse(response),
         error => console.error('Error @ GuestsService#_loadGuests', error)
