@@ -40,5 +40,5 @@ function formatLong(date): string {
   console.assert(date != null, 'Assertion Fail @ dateUtils#generateGreetingFromTimezone: No date');
   console.assert(constants != null, 'Assertion Fail @ dateUtils#generateGreetingFromTimezone: No constants');
 
-  return moment().format(constants.formatLongWithTime);
+  return moment(date).format(constants.formatLongWithTime);
 }
