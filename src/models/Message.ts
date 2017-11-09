@@ -66,7 +66,7 @@ export class Message
     console.assert(this._message != null, 'Assertion Fail @ Message#toString: No message');
     console.assert(regexMethods != null, 'Assertion Fail @ Message#toString: No regexMethods');
 
-    let message = this._message;
+    const message: string = this._message;
     const placeholdersWithTemplate: string[] = regexMethods.getPlaceholdersFromString(message);
 
     placeholdersWithTemplate.forEach(placeholder => {
